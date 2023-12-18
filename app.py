@@ -19,3 +19,7 @@ def create():
     priority = request.form.get("priority")
     status = request.form.get("status")
     return db.todos_create(task, due_date, priority, status)
+
+@app.route("/todos/<id>.json")
+def show(id):
+    return db.todos_find_by_id(id)

@@ -71,3 +71,14 @@ def todos_create(task, due_date, priority, status):
     ).fetchone()
     conn.commit()
     return dict(row)
+
+def todos_find_by_id(id):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        SELECT * FROM todos
+        WHERE id = ?
+        """,
+        id,
+    ).fetchone()
+    return dict(row)
