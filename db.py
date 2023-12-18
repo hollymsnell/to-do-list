@@ -58,3 +58,16 @@ def todos_all():
         """
     ).fetchall()
     return [dict(row) for row in rows]
+
+def todos_create(task, due_date, priority, status):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        INSERT INTO todos (task, due_date, priority, status)
+        VALUES (?, ?, ?, ?)
+        RETURNING *
+        """,
+        (task, due_date, priority, status),
+    ).fetchone()
+    conn.commit()
+    return dict(row)
