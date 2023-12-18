@@ -95,3 +95,15 @@ def todos_update_by_id(id, task, due_date, priority, status):
     ).fetchone()
     conn.commit()
     return dict(row)
+
+def todos_destroy_by_id(id):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        DELETE from todos
+        WHERE id = ?
+        """,
+        id,
+    )
+    conn.commit()
+    return {"message": "Todo destroyed successfully"}

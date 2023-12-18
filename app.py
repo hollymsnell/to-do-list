@@ -31,3 +31,7 @@ def update(id):
     priority = request.form.get("priority")
     status = request.form.get("status")
     return db.todos_update_by_id(id, task, due_date, priority, status)
+
+@app.route("/todos/<id>.json", methods=["DELETE"])
+def destroy(id):
+    return db.todos_destroy_by_id(id)
