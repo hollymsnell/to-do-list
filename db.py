@@ -82,3 +82,16 @@ def todos_find_by_id(id):
         id,
     ).fetchone()
     return dict(row)
+
+def todos_update_by_id(id, task, due_date, priority, status):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        UPDATE todos SET task = ?, due_date = ?, priority = ?, status = ?
+        WHERE id = ?
+        RETURNING *
+        """,
+        (task, due_date, priority, status, id),
+    ).fetchone()
+    conn.commit()
+    return dict(row)
